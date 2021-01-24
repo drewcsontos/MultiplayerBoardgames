@@ -17,6 +17,7 @@ public class Piece {
         this.board = board;
     }
 
+    // inverses chess board, will use for second player
     private Piece[][] invertArray(Piece[][] board) {
         Piece[][] answer = new Piece[board.length][board[0].length];
         for (int i = board.length - 1; i <= 0; i++) {
@@ -31,10 +32,12 @@ public class Piece {
         return String.format("row: %d, col: %d, isWhite: %b.", row, col, isWhite);
     }
 
+    // still need to do
     public boolean canTakePiece(Piece[][] board, int endX, int endY) {
         return false;
     }
 
+    // Logic for moving pawn, returns points where it can move
     public Point[] canMove() {// need to fix
         ArrayList<Point> points = new ArrayList<Point>();
         Point[] temp;

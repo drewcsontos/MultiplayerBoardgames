@@ -17,6 +17,7 @@ public class BoardGameClient {
     static boolean canMove = false;
     static boolean isWhite;
 
+    // Handles getting input from server and outputting to the server, as well as instantiating the window.
     public static void main(String[] args) throws Exception {
         try (var socket = new Socket("localhost", 59090)) {
             System.out.println("Press Control-C to quit.");
@@ -71,6 +72,8 @@ public class BoardGameClient {
         }
     }
 
+    // Updates the board to enable and disable buttons which you should not be able
+    // to press.
     private static void updateBoard() {
         for (int row = 0; row < board.length; row++)
             for (int col = 0; col < board[row].length; col++) {
@@ -86,6 +89,8 @@ public class BoardGameClient {
             }
     }
 
+    // Shows moves from the selected piece by setting the background of the button
+    // to red.
     private static void showMoves() {
         if (board[selection1.x][selection1.y].canMove() != null) {
             for (Point p : board[selection1.x][selection1.y].canMove()) {
@@ -96,6 +101,7 @@ public class BoardGameClient {
 
     }
 
+    // changes the string from the server to the board with pieces
     private static void stringToBoard(String s) {
         String[] lines = s.split("n");
         for (int i = 0; i < lines.length; i++) {
@@ -112,6 +118,8 @@ public class BoardGameClient {
 
     }
 
+    // all the logic for selecting each piece, like deselecting, moving pieces, and
+    // more
     public static void select(int row, int col) {
         if (Window.buttons[row][col].getBackground() == Color.RED) {
             Window.buttons[row][col].setForeground(null);
@@ -164,6 +172,7 @@ public class BoardGameClient {
         }
     }
 
+    // Swing Graphics Game Window, adds buttons with specific colors and changes background
     public static class Window extends Canvas {
         /**
          * 
@@ -217,9 +226,7 @@ public class BoardGameClient {
                 test.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        // if (Board.board[row][col] != null && Board.board[row][col].color ==
-                        // Board.turn)
-                        // Board.select(row, col);
+
                         System.out.println(row + " " + col);
                         if (canMove) {
                             select(row, col);
@@ -228,11 +235,6 @@ public class BoardGameClient {
 
                     }
                 });
-                // if (i == 5) {
-                // test.setDisabledSelectedIcon(null);
-                // test.setDisabledIcon(null);
-                // test.setEnabled(false);
-                // }
                 controlPanel.add(test);
                 buttons[row][col] = test;
                 white = !white;
